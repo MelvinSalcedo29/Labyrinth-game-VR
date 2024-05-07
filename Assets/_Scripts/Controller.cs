@@ -37,7 +37,7 @@ public class Controller : MonoBehaviour
             tiempoTotal++;
             timer.text = tiempoTotal.ToString();
             // Esperar un frame
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSecondsRealtime(1f);
 
         }
 

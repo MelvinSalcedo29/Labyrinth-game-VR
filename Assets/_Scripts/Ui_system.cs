@@ -12,6 +12,6 @@ public class Ui_system : MonoBehaviour
     }
     public void ui_LoadLevelGame()
     {
-        SceneManager.LoadScene("GameLaberynt");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

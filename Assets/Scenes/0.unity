@@ -20118,7 +20118,9 @@ MonoBehaviour:
   audioClipError: {fileID: 8300000, guid: c8a9c6701aa1e8e4b959cbbfd67fce6b, type: 3}
   audioClipBeginGame: {fileID: 8300000, guid: 6cf776fd65031a3418c71ec4a5b04635, type: 3}
   audioClipEndGame: {fileID: 8300000, guid: c2326b085990ad74b815f0324c295839, type: 3}
+  audioClipErrorPassPared: {fileID: 0}
   VerficarColiderEntrada: 0
+  mensajeReiniciar_Nivel: {fileID: 0}
 --- !u!54 &1399556956
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -27202,6 +27204,9 @@ MonoBehaviour:
   capaObjetivo:
     serializedVersion: 2
     m_Bits: 64
+  CapaParedes:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &1839886233
 GameObject:
   m_ObjectHideFlags: 0

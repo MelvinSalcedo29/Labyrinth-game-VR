@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Unity.VisualScripting;
 
 public class Actions : MonoBehaviour
 {
@@ -34,10 +36,32 @@ public class Actions : MonoBehaviour
     private Vector3 positionInitial;
     private Vector3 positionNext;
     private bool boolFirstCollision = false;
-
+    private XRIDefaultInputActions inputActions;
+    private bool enableODisableButton = false;
     private void Start()
     {
+        inputActions = new();
         trailRenderer = this.gameObject.transform.GetChild(0).GetComponentInChildren<TrailRenderer>();
+
+        inputActions.Enable();
+        inputActions.XRIRightHandInteraction.Activate.started += UpdateEnableDIsableButtonTrue;
+        inputActions.XRIRightHandInteraction.Activate.canceled += UpdateEnableDIsableButtonFalse;
+    }
+    private void UpdateEnableDIsableButtonTrue(InputAction.CallbackContext context)
+    {
+        print("hola");
+        enableODisableButton = true;
+    }
+    private void UpdateEnableDIsableButtonFalse(InputAction.CallbackContext context)
+    {
+        print("hola2");
+        enableODisableButton = false;
+    }
+    private void OnDisable()
+    {
+        inputActions.Disable();
+        inputActions.XRIRightHandInteraction.Select.started -= UpdateEnableDIsableButtonTrue;
+        inputActions.XRIRightHandInteraction.Select.canceled -= UpdateEnableDIsableButtonFalse;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -55,21 +79,7 @@ public class Actions : MonoBehaviour
 
 
         }
-        if (other.name == "Colliders_entrada" && VerficarColiderEntrada == false)
-        {
-            trailRenderer.time = 999;
-            audioSource.PlayOneShot(audioClipBeginGame);
-            VerficarColiderEntrada = true;
-            controller.InciarTimer();
-            gameObject_trailRenderer.SetActive(true);
-            text_choques.gameObject.SetActive(true);
-            // gameObject_entrada.gameObject.SetActive(false);
-            text_choques.text = "0";
-            controller.timer.text = "0";
-            count = 0;
-            Debug.Log("entrada");
 
-        }
         if (other.name == "Colliders_salida" && VerficarColiderEntrada == true)
         {
             audioSource.PlayOneShot(audioClipEndGame);
@@ -90,6 +100,24 @@ public class Actions : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.name == "Colliders_entrada" && VerficarColiderEntrada == false && enableODisableButton == true)
+        {
+            trailRenderer.time = 999;
+            audioSource.PlayOneShot(audioClipBeginGame);
+            VerficarColiderEntrada = true;
+            controller.InciarTimer();
+            gameObject_trailRenderer.SetActive(true);
+            text_choques.gameObject.SetActive(true);
+            // gameObject_entrada.gameObject.SetActive(false);
+            text_choques.text = "0";
+            controller.timer.text = "0";
+            count = 0;
+            Debug.Log("entrada");
+
+        }
+    }
     private void OnTriggerExit(Collider other)
     {
         if (other.name == "pared" && VerficarColiderEntrada == true)

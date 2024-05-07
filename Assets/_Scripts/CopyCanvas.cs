@@ -16,7 +16,7 @@ public class CopyCanvas : MonoBehaviour
 
     private void OnEnable()
     {
-        print("hola");
+       
         if (pcopyParentTIme != null)
         {
             pcopyParentTIme.text = parentTime.text;
